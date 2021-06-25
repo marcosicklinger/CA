@@ -66,3 +66,33 @@ class SamplePool(Dataset):
     
     def update(self, new_images, idx):
         self.images[idx] = new_images
+        
+        
+class Pool(Dataset):
+    
+    def __init__(self, pool_size, n_channels, image_size, transform = None):
+        self.images = MakeSeed(pool_size, n_channels, image_size)
+        self.size = pool_size
+        self.n_channels = n_channels
+        self.image_size = image_size
+        if transform is None:
+            self.transform = lambda x: x
+        else:
+            self.transform = transform
+    
+    def __len__(self):
+        return self.size
+    
+    def __getitem__(self, index):
+        return self.transform(self.images[index]), index
+        
+    def update(self, new_images, idx):
+        self.images[idx] = new_images
+
+# Loss avarage over time
+
+def time_avarage(x):
+    
+    pass
+    
+    
